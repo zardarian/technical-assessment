@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  listing-service:
+    build: ./listing
+    container_name: listing-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    environment:
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+
+  owner-service:
+    build: ./owner
+    container_name: owner-service
+    ports:
+      - "8082:8082"
+
+  redis:
+    image: redis:7.2
+    container_name: redis
+    ports:
+      - "6379:6379"
